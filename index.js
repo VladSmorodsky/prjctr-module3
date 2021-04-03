@@ -14,22 +14,22 @@ const server = http.createServer((req, res) => {
         let name = requestUrl.searchParams.get('name');
 
         if(pathName == '/hello' || pathName == '/goodbye') {
+            let greeting = pathName == '/hello' ? 'Hello ' : 'Goodbye';
             if(name !== null ){
                 resultObj.status = 200;
-                resultObj.text = `Hello ${name}`;
+                resultObj.text = `${greeting} ${name}`;
             } else if (Array.from(requestUrl.searchParams).length > 0) {
                 resultObj.status = 404;
                 resultObj.text = 'Not found';
             } else {
                 resultObj.status = 200;
-                resultObj.text = 'Hello world';
+                resultObj.text = `${greeting} world`;
             }
         }
     }
     res.statusCode = resultObj.status;
     res.setHeader('Content-Type','text/plain');
-    res.end(resultObj.text); 
-    return;  
+    res.end(resultObj.text);    
 });
 
 server.listen(port, () => {
